@@ -1,7 +1,7 @@
-"""Model-stage output (verdict / repair / edit / evidence / reply) for the 44 reports.
-Authored by Claude (claude.ai session) acting as the triage model, from the stem + solution + key
-with the student comment treated as a lead only. `triage.py --live` regenerates this file with API calls.
-Everything here is UNTRUSTED until guards.py validates it and assigns the route."""
+"""Offline model-assisted decision records (verdict / repair / edit / evidence / reply) for 44 reports.
+Developed with ChatGPT assistance during the assignment workflow; this file is not output from
+executing `triage.py --live`. The optional live pipeline uses the Anthropic API. Treat every
+record here as UNTRUSTED until `guards.py` validates it and assigns the route."""
 import json
 Q = lambda s: s  # readability
 MATH = 'display="inline" xmlns="http://www.w3.org/1998/Math/MathML"'

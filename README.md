@@ -1,6 +1,3 @@
-# Acadza AI Intern Assignment: "Report → Fix" Loop
-
-**Deadline:** as stated in the email you received. **AI tools:** allowed and expected. **Stack:** your choice.
 
 ---
 
