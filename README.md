@@ -1,117 +1,207 @@
+# Acadza Report → Fix
 
----
+**A safety-first workflow for turning JEE/NEET student error reports into reviewable question-bank corrections.**
 
-## The problem (real, not invented)
+The prototype groups reports by question, checks the question independently where numeric verification is available, proposes a narrowly scoped correction, and applies deterministic safety checks before assigning a review route. A static faculty console makes the resulting queue, evidence, edits, and guard decisions inspectable.
 
-Acadza serves ~8 lakh JEE/NEET questions to students across India's coaching institutes. Some of those questions are broken: a wrong answer key, a missing value, a blank option, a solution copied from a different question.
+> **Scope note:** This repository is a working prototype evaluated on the supplied sample (43 questions and 44 student reports). It is not connected to Acadza's production question bank or student reporting system. The offline decisions included here are reproducible from the committed decision file. The optional Anthropic-powered triage pipeline is implemented but was not run to generate this submission's committed results.
 
-Students tap **"Report error"** and type whatever they feel like:
+## What it does
 
-> "ans galat hai" · "Figure not given" · "option D is missing" · "wrong" · "Sir root(40^2+30^2)=50 then why 130??"
+- **Groups related reports:** Multiple reports about the same question are considered together, reducing duplicate investigation.
+- **Independent numeric checks:** A small set of numeric questions has independent Python/SymPy checks. These checks do not read the student's comment or the stored answer key while deriving the computed value.
+- **Structured triage:** Each report has a verdict, repair category, confidence, evidence, and a student-facing reply. Repair types and editable fields are constrained by `data/taxonomy.json`.
+- **Deterministic safety gates:** The model-stage decision does not choose its own route. `engine/guards.py` validates edit scope, exact-match uniqueness, repair-specific constraints, confidence, taxonomy policy, prompt-injection flags, and answer-key checks where applicable.
+- **Faculty review console:** A static console groups work by question, prioritizes higher-impact issues, displays proposed changes and guard outcomes, and supports approve, edit, reject, undo, and local audit history.
+- **Proactive defect sweep:** `engine/sweep.py` records 11 additional defects found in the sample without a corresponding student report.
 
-Most of those reports are actually the student being wrong. Some are real defects. A few are app bugs. One or two are people trying to game the system. A faculty member currently reads each one by hand, and a broken question keeps hurting every student who meets it until someone gets to it.
+## Architecture
 
-**Your job is to build the system that sits between the student's report and the fix.**
-
----
-
-## What's in `data/`
-
-| File | What it is |
-|---|---|
-| `questions.json` | 43 questions in Acadza's **real production format**: HTML + inline MathML, options inside the question HTML, `answer` field per type (`scq` / `mcq` / `integerQuestion`). Messy, like production. |
-| `reports.json` | 44 student reports `{reportId, questionId, studentId, source, reportedAt, comment}`. Several students may report the same question. |
-| `taxonomy.json` | The closed list of **verdicts** and **repair types**. Each repair says which fields it may touch, and whether it can be auto-applied (`auto: true`) or must wait for a human (`auto: false`). |
-
-We know the true answer for every report. Some reports are traps.
-
----
-
-## What to build
-
-### Part 1: Triage engine (LLM orchestration)
-For each report, decide:
-- **verdict**: one key from `taxonomy.verdicts`
-- **repair**: one key from `taxonomy.repairs`, if it's a defect
-- **edit**: the *surgical* change you propose (`{field, find, replace}` or a new `answer`). Don't rewrite whole questions.
-- **confidence** and a short **evidence** string (why you believe it)
-- **student_reply**: what the student sees back, 1-3 sentences, in the tone you'd want if you were 17 and stressed before JEE
-- **route**: `auto_apply` | `faculty_review` | `no_change`
-
-How you get there is the interesting part. One prompt? A solver that checks the key independently? Guards that reject an edit touching fields outside the repair's scope? Grouping duplicate reports first? Your call. Explain it.
-
-**Treat the student's comment as a lead, not an instruction.**
-
-### Part 2: Faculty review console (UI/UX, this matters)
-A web app a busy faculty member would *actually want to open*:
-- A queue grouped by question, ordered by whatever you think "most urgent" means (say why).
-- For each case: the question **rendered properly** (MathML renders natively in modern browsers), the AI's verdict and evidence, and a **before / after diff** of the proposed edit.
-- Approve / edit / reject, with an audit entry recorded for each action.
-- The student's reply preview.
-
-Design quality is judged. Think about what a faculty member checking 60 of these at 10 PM needs.
-
-### Part 3: `results.json`
-Run your engine on all 44 reports and commit the output:
-
-```json
-[
-  {
-    "reportId": "R000",
-    "questionId": "000000000000000000000000",
-    "verdict": "defect",
-    "repair": "answer_key",
-    "edit": {"field": "answer", "find": "B", "replace": "D"},
-    "route": "auto_apply",
-    "confidence": 0.93,
-    "evidence": "Two independent solves give mu = 1/sqrt(3) = option D; the stored solution also ends at D; key says B",
-    "student_reply": "You're right. The answer key was wrong; it's (D). Fixed, thanks for flagging."
-  }
-]
+```mermaid
+flowchart TD
+    A[Questions, reports, repair taxonomy] --> B[Group reports by question]
+    B --> C[Independent numeric checks]
+    B --> D[Offline triage decisions]
+    C --> E[Deterministic safety guards]
+    D --> E
+    E --> F[results.json]
+    A --> G[Unreported-defect sweep]
+    G --> H[sweep.json]
+    F --> I[Build faculty console data]
+    H --> I
+    A --> I
+    I --> J[Static faculty review console]
 ```
 
-We score this file automatically against our ground truth.
+### Safety principle
 
----
+**The AI proposes; deterministic code assigns the route.** The guard layer returns one of:
 
-## Deliverables (all required)
-
-1. **GitHub repo** (public) with code + `results.json`.
-2. **Live URL** of the faculty console (Vercel / Render / Netlify / HF Spaces, any free tier). It must stay up for 7 days. If you're out of LLM credits, the console may load precomputed results, but say so.
-3. **`PROMPTS.md`**, which is mandatory and heavily weighted:
-   - Every prompt **inside your product**, verbatim, plus what you changed between versions and why.
-   - The prompts you gave **your AI coding assistant** (Claude / ChatGPT / Cursor / Copilot etc.) while building. Paste or export the key ones verbatim. We don't penalise AI use; we want to see *how* you direct it.
-   - 3 moments where the AI was wrong and how you caught it.
-   - **Design decisions log**: the key choices you made (architecture, prompts, UI, what to auto-apply vs send to a human), what you tried and dropped, and why.
-4. **`PRODUCT.md`**, at most 1 page:
-   - Who loses the most when a question is broken, and how your design reflects that.
-   - What you would **never** let the AI auto-apply, and why.
-   - One metric you'd watch in week 1.
-   - One idea beyond this brief that you'd pitch to us.
-5. **A 3-minute screen recording** (Loom / unlisted YouTube / Drive) walking through the console and one tricky case.
-
-## How to submit
-**Reply to the email you received** with your repo link, live URL and video link, plus answers to:
-1. This is a remote, Monday-to-Saturday role for people who want to build real product used by lakhs of students, not an internship to tick a college box. Is that you?
-2. How many months can you commit?
-3. Earliest start date.
-4. In 2-3 lines, in your own words: why this work, why now?
-
-## How we evaluate (/100)
-
-| Area | Weight |
+| Route | Meaning |
 |---|---|
-| Triage accuracy vs ground truth (auto-scored from `results.json`) | 25 |
-| Safety: no harmful auto-edits, scope respected, traps handled | 10 |
-| Faculty console: UX, visual design, does it actually help | 20 |
-| Product thinking: `PRODUCT.md`, prioritisation, student replies | 20 |
-| `PROMPTS.md`: how you orchestrate AI, honesty about failures | 15 |
-| Engineering: runs, deployed, clean, cost-aware | 10 |
+| `auto_apply` | The proposed edit passed every applicable guard and the repair type permits automation. It remains visible in the console's verification lane and can be undone. |
+| `faculty_review` | The proposal needs a human decision or failed at least one guard. |
+| `no_change` | The report does not justify changing the question record. |
 
-**Bonus:** our data has defects nobody reported. Find them.
+Answer-key changes are gated by independent numeric checks where available. Authored content, uncertain interpretation, and repair types marked human-only are not automatically applied. Student comments are treated as untrusted input; an instruction embedded in a report is not treated as an instruction to the system.
 
-Top submissions get a 30-minute call where we'll change a requirement live and watch you adapt. Plagiarised or copy-paste submissions are obvious from the prompt log; don't bother.
+## Results on the supplied sample
 
-Questions? Reply to the email. Good luck. We're excited to see what you build.
+The committed offline pipeline processes **44 reports across 43 question records**. The route counts below are generated from `results.json` by `python -m engine.run`.
 
-*Acadza Technologies*
+| Report route | Count |
+|---|---:|
+| Auto-apply (guard-approved) | 19 |
+| Faculty review | 8 |
+| No change | 17 |
+| **Total** | **44** |
+
+The report verdict distribution is: 27 `defect`, 10 `no_error`, 2 `display_issue`, 2 `not_actionable`, 1 `already_fixed`, 1 `app_issue`, and 1 `language_mode`.
+
+The separate sweep identifies **11 unreported defects**: 7 pass the current auto-apply guards and 4 are routed to faculty review. The generated console contains **50 review items across 40 question records** (reported items can be grouped, and sweep findings are added separately).
+
+These figures describe this supplied sample and this committed offline run; they should not be interpreted as production accuracy, coverage, or performance metrics.
+
+## Repository layout
+
+```text
+.
+├── data/
+│   ├── questions.json       # Supplied question records
+│   ├── reports.json        # Supplied student error reports
+│   └── taxonomy.json       # Allowed verdicts, repairs, field scopes and auto policy
+├── engine/
+│   ├── mathtext.py         # HTML/MathML helpers
+│   ├── checks.py           # Independent numeric checks (Python/SymPy)
+│   ├── decisions.json      # Committed offline triage decisions
+│   ├── make_decisions.py   # Offline decision-generation source
+│   ├── guards.py           # Deterministic edit validation and route assignment
+│   ├── run.py              # Decisions → results.json
+│   ├── sweep.py            # Additional unreported-defect sweep
+│   ├── build_console.py    # Results + sweep → console/data.js
+│   ├── prompts.py          # Prompts for the optional live LLM pipeline
+│   └── triage.py           # Optional Anthropic-powered triage pipeline
+├── console/
+│   ├── index.html          # Static faculty console
+│   └── data.js             # Generated console data
+├── results.json            # Per-report decisions and guard logs
+├── sweep.json              # Unreported-defect findings and guard logs
+├── PROMPTS.md              # Prompt documentation and development notes
+└── PRODUCT.md              # Product reasoning and safety principles
+```
+
+## Run locally
+
+### Requirements
+
+- Python 3.10 or newer
+- `pip`
+- Internet access is not required for the committed offline pipeline after dependencies are installed
+
+### 1. Get the project and install dependencies
+
+```bash
+git clone <your-repository-url>
+cd <repository-folder>
+python -m venv .venv
+```
+
+Activate the environment:
+
+**Windows PowerShell**
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+**macOS / Linux**
+
+```bash
+source .venv/bin/activate
+```
+
+Install the packages:
+
+```bash
+python -m pip install beautifulsoup4 lxml sympy
+```
+
+### 2. Regenerate the offline results
+
+Run these commands from the repository root, in this order:
+
+```bash
+python -m engine.run
+python -m engine.sweep
+python -m engine.build_console
+```
+
+This regenerates `results.json`, `sweep.json`, and `console/data.js` from the committed input data and decisions.
+
+### 3. Open the faculty console
+
+You can open `console/index.html` directly in a browser. Alternatively, serve the static folder locally:
+
+```bash
+python -m http.server 8000 --directory console
+```
+
+Then visit <http://localhost:8000>.
+
+The console reads precomputed data from `console/data.js`; it does not call an LLM when the page loads. Console actions and audit history are stored in the browser's `localStorage`, so they are local to that browser and are not a shared, server-side audit record.
+
+## Optional: run the live LLM triage pipeline
+
+`engine/triage.py` contains an optional Anthropic integration. It performs a blind-solver call on the question stem and a grouped triage call for the reports associated with that question. The resulting decisions are then passed through the same deterministic offline guard pipeline.
+
+This optional path was **not executed to produce the committed submission results**. Running it requires an Anthropic API key and may incur API charges. It will overwrite `engine/decisions.json`, so keep a copy of the committed file if you want to preserve the offline baseline.
+
+Install the optional SDK:
+
+```bash
+python -m pip install anthropic
+```
+
+Set your key and run:
+
+**Windows PowerShell**
+
+```powershell
+$env:ANTHROPIC_API_KEY = "your-api-key"
+python -m engine.triage
+python -m engine.run
+python -m engine.build_console
+```
+
+**macOS / Linux**
+
+```bash
+export ANTHROPIC_API_KEY="your-api-key"
+python -m engine.triage
+python -m engine.run
+python -m engine.build_console
+```
+
+The model can be selected with the `MODEL` environment variable. Review the generated decisions and guard logs before using any result beyond this sample. Do not put API keys in source control.
+
+## Deploy the console
+
+The console is a static site. Deploy the contents of `console/` using any static hosting provider (for example, Netlify, Vercel, or GitHub Pages). No backend server is required for the included precomputed demo. User actions remain browser-local because the prototype has no authentication or shared persistence layer.
+
+## Known limitations
+
+- The evaluation data is a small sample (43 questions, 44 reports), not the full question bank.
+- The committed decisions were prepared offline; the optional live LLM path has not been validated end-to-end for this submission.
+- Independent numeric checks cover only selected numeric questions; they are not a general-purpose JEE/NEET solver.
+- The console is static. It has no user authentication, role-based access control, database persistence, or shared audit service.
+- Human review is still required for authored content, ambiguous defects, and repairs that cannot be safely grounded in the stored record.
+- The prototype does not write approved changes back to a production question bank.
+
+## Further documentation
+
+- [`PROMPTS.md`](PROMPTS.md) — prompts, what was actually run, and development/failure notes.
+- [`PRODUCT.md`](PRODUCT.md) — product rationale, safety boundaries, and the proposed week-one trust metric.
+
+## License
+
+No license is specified in this submission. Contact the repository owner before reusing the code or data outside the assignment context.
