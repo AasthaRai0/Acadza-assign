@@ -1,0 +1,97 @@
+{
+ "68dea616d0cda73d07e93ae6": {
+  "computed": 1.0,
+  "key_value": 2.0,
+  "note": "face-centre q/4e0 + corner q/4e0 = q/2e0 -> n=1"
+ },
+ "68e870ef42c06737d6e565c4": {
+  "computed": 4800.0,
+  "key_value": 4556.0,
+  "note": "P = rho v^2/3"
+ },
+ "60f744b3f1b9bc7cc7b4a949": {
+  "computed": 50.0,
+  "key_value": 130.0,
+  "note": "V = sqrt(VR^2+(VL-VC)^2)"
+ },
+ "6263d75bdd44e265ef926d97": {
+  "computed": 20.0,
+  "key_value": 20.0,
+  "note": "a^2 = 400"
+ },
+ "696a866665252c04fc1f81c2": {
+  "computed": 50.0,
+  "key_value": 50.0,
+  "note": "edge 10 cm assumed by stored solution"
+ },
+ "60f742f6660d187cc13a8078": {
+  "computed": 50.0013,
+  "key_value": 50.0,
+  "note": "Z=sqrt(R^2+(2 pi f L)^2)"
+ },
+ "5fc60508028950133eac8963": {
+  "computed": 20.0,
+  "key_value": 20.0,
+  "note": "f = mg = 20 N (< 30 N limit)"
+ },
+ "612151a6a34397610a9a2e58": {
+  "computed": 16.7146,
+  "key_value": 16.8,
+  "note": "eV"
+ },
+ "68f21caf941cda588bc04365": {
+  "computed": 1.4427,
+  "key_value": 1.44,
+  "note": "tau (min)"
+ },
+ "68dea715387eea3d0d95f790": {
+  "computed": 3113.0,
+  "key_value": 3113.0,
+  "note": "4 s.f."
+ },
+ "68dea619d0cda73d07e93aee": {
+  "computed": 4.0,
+  "key_value": 4.0,
+  "note": "t (s)"
+ },
+ "68e8734442c06737d6e56da4": {
+  "computed": 0.8,
+  "key_value": 0.8,
+  "note": "mu"
+ },
+ "68dea577d0cda73d07e9391c": {
+  "computed": 14.0,
+  "key_value": 14.0,
+  "note": "VP-VS (V)"
+ },
+ "636283dbe3770c24f866e6d6": {
+  "computed": 4.0,
+  "key_value": 4.0,
+  "note": "sigma_big/sigma_small"
+ },
+ "6956d7e988d7701e5617bd3e": {
+  "computed": 11.3137,
+  "key_value": 11.3137,
+  "note": "A (m)"
+ },
+ "6956d7bb23cb221e570d6013": {
+  "computed": 1.3258,
+  "key_value": 1.3258,
+  "note": "H=R => tan(theta)=4"
+ },
+ "68dea7c2387eea3d0d95f9bb": {
+  "computed": 8.0,
+  "key_value": 8.0,
+  "note": "shift (cm)"
+ },
+ "6062ec84518e9535e120c422": {
+  "computed": 5.7,
+  "key_value": 5.7,
+  "note": "gamma x1e-5"
+ },
+ "695ee00b88d7701e561aabc5": {
+  "computed": 2.0,
+  "key_value": 1.0,
+  "note": "I/I0: 2.0 -> Assertion (I = I0) is FALSE; Reason (\"always sum\") also false"
+ }
+}

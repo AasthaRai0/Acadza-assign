@@ -1,0 +1,775 @@
+[
+ {
+  "id": "S01",
+  "verdict": "defect",
+  "route": "auto_apply",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "spelling"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no number changed (digits identical)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "surgical (find ≤ 160 chars)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": true,
+    "detail": "0.97 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "61ee6c9d90a1a968a168686b",
+  "repair": "spelling",
+  "confidence": 0.97,
+  "evidence": "Solution typos: 'prominant' → 'prominent', 'Maceus' → 'Mucous'.",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "prominant",
+    "replace": "prominent"
+   },
+   {
+    "field": "solution",
+    "find": "Maceus membrane",
+    "replace": "Mucous membrane"
+   }
+  ]
+ },
+ {
+  "id": "S02",
+  "verdict": "defect",
+  "route": "auto_apply",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "spelling"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no number changed (digits identical)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "surgical (find ≤ 160 chars)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": true,
+    "detail": "0.95 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "620e23cecc50543bc7db9186",
+  "repair": "spelling",
+  "confidence": 0.95,
+  "evidence": "Solution typo: 'wheater' → 'whether'.",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "wheater",
+    "replace": "whether"
+   }
+  ]
+ },
+ {
+  "id": "S03",
+  "verdict": "defect",
+  "route": "auto_apply",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "spelling"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no number changed (digits identical)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "surgical (find ≤ 160 chars)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": true,
+    "detail": "0.95 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "617fa18efd53ff1629ed890f",
+  "repair": "spelling",
+  "confidence": 0.95,
+  "evidence": "Missing space in stem: 'part ofleaf' (span boundary swallowed it).",
+  "edits": [
+   {
+    "field": "question",
+    "find": "part of<span style=\"color:#000000\">leaf",
+    "replace": "part of <span style=\"color:#000000\">leaf"
+   }
+  ]
+ },
+ {
+  "id": "S04",
+  "verdict": "defect",
+  "route": "auto_apply",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "noise"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "deletion only",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "surgical (find ≤ 160 chars)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": true,
+    "detail": "0.96 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "6956d7bb23cb221e570d6013",
+  "repair": "noise",
+  "confidence": 0.96,
+  "evidence": "Solution starts with stray 'Solution:' and '(b)' labels copied from a source book.",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "Solution:<br/>(b) ",
+    "replace": ""
+   }
+  ]
+ },
+ {
+  "id": "S05",
+  "verdict": "defect",
+  "route": "auto_apply",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "notation"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no number changed (digits identical)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "surgical (find ≤ 160 chars)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": true,
+    "detail": "0.93 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "6062ec84518e9535e120c422",
+  "repair": "notation",
+  "confidence": 0.93,
+  "evidence": "Solution units garbled: '/AC' and '/CC' should be '/°C' (degree sign lost). Final answer unaffected.",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "<mrow><mi mathvariant=\"normal\">A</mi><mi mathvariant=\"normal\">C</mi></mrow>",
+    "replace": "<mrow><mo>&#x000B0;</mo><mi mathvariant=\"normal\">C</mi></mrow>"
+   },
+   {
+    "field": "solution",
+    "find": "<mrow><mi mathvariant=\"normal\">C</mi><mi mathvariant=\"normal\">C</mi></mrow>",
+    "replace": "<mrow><mo>&#x000B0;</mo><mi mathvariant=\"normal\">C</mi></mrow>"
+   }
+  ]
+ },
+ {
+  "id": "S06",
+  "verdict": "defect",
+  "route": "auto_apply",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "markup_leak"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no number changed (digits identical)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "surgical (find ≤ 160 chars)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": true,
+    "detail": "0.95 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "622f08d7b70e4b50e4500a1b",
+  "repair": "markup_leak",
+  "confidence": 0.95,
+  "evidence": "Solution shows two stray '&' (LaTeX align markers) around v_CM = …",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "</msub><mi>&</mi>",
+    "replace": "</msub>"
+   },
+   {
+    "field": "solution",
+    "find": "<mspace linebreak=\"newline\" /><mi>&</mi>",
+    "replace": "<mspace linebreak=\"newline\" />"
+   }
+  ]
+ },
+ {
+  "id": "S07",
+  "verdict": "defect",
+  "route": "auto_apply",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "markup_leak"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no number changed (digits identical)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "surgical (find ≤ 160 chars)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": true,
+    "detail": "0.95 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "6956d79788d7701e5617bc29",
+  "repair": "markup_leak",
+  "confidence": 0.95,
+  "evidence": "Solution shows two stray '&' (LaTeX align markers) before P and ϕ.",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "<mi>&amp;</mi><mi>P</mi>",
+    "replace": "<mi>P</mi>"
+   },
+   {
+    "field": "solution",
+    "find": "<mspace linebreak=\"newline\"></mspace><mi>&amp;</mi>",
+    "replace": "<mspace linebreak=\"newline\"></mspace>"
+   }
+  ]
+ },
+ {
+  "id": "S08",
+  "verdict": "defect",
+  "route": "faculty_review",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "notation"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no number changed (digits identical)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "surgical (find ≤ 160 chars)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": false,
+    "detail": "0.8 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "68dea657387eea3d0d95f54a",
+  "repair": "notation",
+  "confidence": 0.8,
+  "evidence": "Solution subscripts garbled: 'P_eqcu' and 'P_eqch' (should read P_eq = 2P and P = 5 D). Meaning inferred, so faculty confirm.",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "<msub><mi> P </mi><mrow><mtext> eqcu </mtext></mrow></msub>",
+    "replace": "<mi> P </mi>"
+   },
+   {
+    "field": "solution",
+    "find": "<msub><mi> P </mi><mrow><mtext> eqch </mtext></mrow></msub>",
+    "replace": "<mi> P </mi>"
+   }
+  ]
+ },
+ {
+  "id": "S09",
+  "verdict": "defect",
+  "route": "faculty_review",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "solution_fix"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": false,
+    "detail": "0.8 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "66fe9dbe22132e5a70a3e579",
+  "repair": "solution_fix",
+  "confidence": 0.8,
+  "evidence": "Solution says insulin and glucagon work 'synergistically'. They are antagonistic (the textbook pair). It also contradicts the question's own logic: if they were synergistic, option B would also be 'not antagonistic' and the SCQ would have two answers. Key D unaffected.",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "Insulin and glucagon work synergistically",
+    "replace": "Insulin and glucagon work antagonistically"
+   }
+  ]
+ },
+ {
+  "id": "S10",
+  "verdict": "defect",
+  "route": "faculty_review",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "solution_missing"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "every `find` matches exactly once",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "new solution ends at keyed value",
+    "ok": true,
+    "detail": "A, B, D"
+   },
+   {
+    "name": "content recoverable from record (not authored)",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "confidence high enough to auto-apply",
+    "ok": false,
+    "detail": "0.8 (needs ≥ 0.85)"
+   },
+   {
+    "name": "taxonomy allows auto-apply",
+    "ok": true,
+    "detail": ""
+   },
+   {
+    "name": "no prompt-injection flag",
+    "ok": true,
+    "detail": ""
+   }
+  ],
+  "questionId": "68c8153cfb6b2f16e2d3ceaf",
+  "repair": "solution_missing",
+  "confidence": 0.8,
+  "evidence": "Solution is a stub ('conceptual Based of field force'). Proposed: a real per-option explanation ending in the key A, B, D (authored text, faculty confirm).",
+  "edits": [
+   {
+    "field": "solution",
+    "find": "<h3>conceptual Based of field force<br />\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>F</mi><mo>=</mo><mi>q</mi><mo>(</mo><mi>V</mi><mo>&times;</mo><mi>B</mi><mo>)</mo></math><br />\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>F</mi><mo>=</mo><mi>q</mi><mi>E</mi></math></h3>\n",
+    "replace": "<h3>(A) v ∥ E: force qE is along v, so motion stays on a straight line ✓<br/>(B) v ⊥ E: constant acceleration ⊥ u gives a parabola ✓<br/>(C) v ∥ B: F = q(v×B) = 0, so a straight line, not a helix ✗<br/>(D) v ⊥ B: F = qvB is centripetal, so a circle in the plane normal to B ✓<br/>Correct: A, B, D</h3>"
+   }
+  ],
+  "must_contain": "A, B, D"
+ },
+ {
+  "id": "S11",
+  "verdict": "defect",
+  "route": "faculty_review",
+  "guards": [
+   {
+    "name": "verdict in closed list",
+    "ok": true,
+    "detail": "defect"
+   },
+   {
+    "name": "repair in closed list",
+    "ok": true,
+    "detail": "notation"
+   },
+   {
+    "name": "scope: fields ⊆ repair.fields",
+    "ok": true,
+    "detail": "allowed ['question', 'solution']"
+   },
+   {
+    "name": "proposes a concrete edit",
+    "ok": false,
+    "detail": ""
+   }
+  ],
+  "questionId": "6956d7e988d7701e5617bd3e",
+  "repair": "notation",
+  "confidence": 0.7,
+  "evidence": "Solution has lost symbols: 'v − dx/dt − Aω cos ωt' should read 'v = dx/dt = Aω cos ωt'; 'cos(π/8) × 2' should be 'cos(2·π/8)'; options carry the unit inside the radical, 2√(2 m). Answer D is right. Needs a human to re-key the MathML.",
+  "edits": []
+ }
+]

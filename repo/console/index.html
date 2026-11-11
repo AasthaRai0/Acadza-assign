@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Acadza · Report → Fix review</title><meta name="color-scheme" content="light dark">
+<style>
+:root{--bg:#f6f7f9;--pn:#fff;--ink:#14171f;--mu:#626b7c;--ln:#e3e6ec;--ac:#3b5bdb;--acs:#e8edff;--ok:#12805c;--oks:#e2f6ee;--wr:#b25e00;--wrs:#fff2dc;--er:#c92a2a;--ers:#ffe9e9;--del:#ffd9d9;--ins:#c9f2dd;--r:12px}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1218;--pn:#171b24;--ink:#eceff6;--mu:#98a1b3;--ln:#272d3a;--ac:#8ea2ff;--acs:#1e2640;--ok:#4cd8a0;--oks:#12332a;--wr:#ffb454;--wrs:#3a2a10;--er:#ff8787;--ers:#3d1a1a;--del:#5a2323;--ins:#1b4a37}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:5;display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:var(--pn);border-bottom:1px solid var(--ln);padding-top:max(10px,env(safe-area-inset-top))}
+header b{font-size:16px}header .st{color:var(--mu);font-size:13px;flex:1;min-width:180px}
+.tabs{display:flex;gap:4px;background:var(--bg);padding:3px;border-radius:10px}.tabs button{border:0;background:none;color:var(--mu);padding:6px 12px;border-radius:8px;font:inherit;font-size:13px;cursor:pointer}.tabs button.on{background:var(--pn);color:var(--ink);box-shadow:0 1px 3px #0002;font-weight:600}
+button{font:inherit;cursor:pointer}.lk{border:1px solid var(--ln);background:var(--pn);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:13px}
+main{display:grid;grid-template-columns:360px 1fr;min-height:calc(100vh - 56px)}
+#q{border-right:1px solid var(--ln);overflow:auto;max-height:calc(100vh - 56px);position:sticky;top:56px}
+.row{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--ln);background:none;color:inherit;padding:12px 14px 12px 16px;border-left:4px solid transparent}.row:hover{background:var(--acs)}.row.on{background:var(--acs);border-left-color:var(--ac)}
+.row .t{font-weight:600;display:block;margin:2px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.row small{color:var(--mu)}
+.sev{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;background:var(--mu)}.sev.h{background:var(--er)}.sev.m{background:var(--wr)}.sev.l{background:var(--ok)}
+#c{padding:20px clamp(14px,3vw,36px) 110px;max-width:1100px;width:100%}
+.chip{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;background:var(--bg);border:1px solid var(--ln);color:var(--mu);margin:0 4px 4px 0}.chip.ac{background:var(--acs);color:var(--ac);border-color:transparent}.chip.ok{background:var(--oks);color:var(--ok);border-color:transparent}.chip.wr{background:var(--wrs);color:var(--wr);border-color:transparent}.chip.er{background:var(--ers);color:var(--er);border-color:transparent}
+h1{font-size:22px;margin:6px 0 10px}h2{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);margin:22px 0 8px}
+.card{background:var(--pn);border:1px solid var(--ln);border-radius:var(--r);padding:14px 16px;margin-bottom:12px}
+.cmt{border-left:3px solid var(--ln);padding-left:10px;margin:0 0 8px;color:var(--mu)}.cmt b{color:var(--ink)}
+.bub{background:var(--acs);border-radius:14px 14px 14px 4px;padding:8px 12px;max-width:560px;margin:4px 0 12px}
+.bar{height:6px;background:var(--ln);border-radius:9px;width:90px;display:inline-block;vertical-align:middle;margin:0 6px}.bar i{display:block;height:100%;border-radius:9px;background:var(--ac)}
+.diff{font-size:16px;line-height:1.8;overflow-wrap:anywhere}del{background:var(--del);text-decoration:line-through;border-radius:3px;padding:0 2px}ins{background:var(--ins);text-decoration:none;border-radius:3px;padding:0 2px}.gap{color:var(--mu)}
+.keych{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:15px;margin-bottom:10px}.keych b{padding:3px 10px;border-radius:8px}.keych .b{background:var(--del)}.keych .a{background:var(--ins)}
+.panes{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pane{border:1px solid var(--ln);border-radius:10px;padding:10px 12px;background:var(--bg);overflow-x:auto}.pane>small{display:block;font-weight:700;color:var(--mu);margin-bottom:6px}
+.pane h3{font-size:16px;font-weight:400;margin:0}math{font-size:1.1em}
+.ck{margin:2px 0;font-size:13px}.ck.f{color:var(--wr);font-weight:600}
+.note{border-radius:10px;padding:10px 12px;margin:8px 0;background:var(--wrs);color:var(--wr)}.note.er{background:var(--ers);color:var(--er)}
+.act{position:fixed;left:360px;right:0;bottom:0;display:flex;gap:10px;align-items:center;padding:12px clamp(14px,3vw,36px);padding-bottom:max(12px,env(safe-area-inset-bottom));background:var(--pn);border-top:1px solid var(--ln);z-index:4}
+.act span{flex:1;color:var(--mu);font-size:13px}.btn{border:1px solid var(--ln);background:var(--pn);color:var(--ink);padding:10px 18px;border-radius:10px;font-weight:600}.btn.p{background:var(--ok);color:#fff;border-color:transparent}.btn.d{color:var(--er)}kbd{font:11px monospace;border:1px solid var(--ln);border-radius:4px;padding:0 4px;margin-left:6px;opacity:.7}
+dialog{border:1px solid var(--ln);border-radius:var(--r);background:var(--pn);color:var(--ink);width:min(680px,94vw);max-height:88vh}dialog::backdrop{background:#0008}
+textarea,select{width:100%;font:13px/1.4 ui-monospace,Menlo,monospace;background:var(--bg);color:var(--ink);border:1px solid var(--ln);border-radius:8px;padding:8px}
+.empty{padding:60px 20px;text-align:center;color:var(--mu)}.back{display:none}
+@media(max-width:860px){main{display:block}#q{max-height:none;position:static}body.det #q{display:none}body:not(.det) #c{display:none}.act{left:0}.act span{display:none}.act .btn{flex:1;padding:10px 6px}.back{display:inline-block;margin-bottom:8px}.panes{grid-template-columns:1fr}}
+</style></head><body>
+<header><b>Acadza · Report → Fix</b><div class="st" id="st"></div><div class="tabs" id="tabs"></div><button class="lk" onclick="audit()">Audit log</button></header>
+<main><aside id="q"></aside><section id="c"></section></main><dialog id="dlg"></dialog>
+<script src="data.js"></script>
+<script>
+const D=window.DATA,$=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch{return d}},sv=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+let S=ld('az_s',{}),A=ld('az_a',[]),tab='review',sel=null;
+const st=i=>S[i.id]?.st||({auto_apply:'applied',faculty_review:'review',no_change:'closed'})[i.route];
+const bucket=i=>({review:'review',applied:'applied'})[st(i)]||'done';
+const sevc=i=>i.verdict!=='defect'?'l':i.score>=30?'h':i.score>=24?'m':'l';
+const tx=h=>{const d=document.createElement('div');d.innerHTML=h||'';return d};
+const lin=n=>{if(n.nodeType==3)return n.textContent;const k=[...n.childNodes],c=i=>k[i]?lin(k[i]):'',a=()=>k.map(lin).join('');switch(n.localName){case'mfrac':return`(${c(0)})/(${c(1)})`;case'msup':return`${c(0)}^(${c(1)})`;case'sup':return`^(${a()})`;case'msub':return`${c(0)}_(${c(1)})`;case'sub':return`_(${a()})`;case'msqrt':return`√(${a()})`;case'br':return'\n';case'h3':case'p':return a()+'\n';default:return a()}};
+const flat=h=>lin(tx(h)).replace(/\u00a0/g,' ').replace(/[ \t]+/g,' ').trim();
+const rep=a=>Array.isArray(a)?'['+a.map(x=>`'${x}'`).join(', ')+']':String(a);
+const clean=h=>(h||'').replace(/ style="[^"]*"/g,'');
+function apply(it){const q=D.questions[it.qid],o={question:q.question,solution:q.solution,answer:rep(q.answer),type:q.type},a={...o};
+ for(const e of it.edits){const k=e.field=='questionType'?'type':e.field;if(!a[k]||a[k].split(e.find).length!=2)return{...o,err:`“${e.find.slice(0,30)}” no longer matches exactly once`};a[k]=a[k].replace(e.find,e.replace)}return a}
+const opt=(q,l)=>{const m=flat(q).match(new RegExp('^\\s*\\('+l+'\\)\\s*(.*)$','m'));return m?m[1]:''};
+function wdiff(a,b){const x=a.replace(/\s+/g,' ').split(' '),y=b.replace(/\s+/g,' ').split(' '),n=x.length,m=y.length,L=Array.from({length:n+1},()=>new Uint16Array(m+1));
+ for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)L[i][j]=x[i]==y[j]?L[i+1][j+1]+1:Math.max(L[i+1][j],L[i][j+1]);
+ const o=[];let i=0,j=0;while(i<n||j<m){if(i<n&&j<m&&x[i]==y[j]){o.push(['=',x[i]]);i++;j++}else if(j<m&&(i==n||L[i][j+1]>=L[i+1][j])){o.push(['+',y[j++]])}else o.push(['-',x[i++]])}
+ const keep=o.map((t,k)=>t[0]!='='||o.slice(Math.max(0,k-6),k+7).some(u=>u[0]!='='));let h='',gap=false;
+ o.forEach((t,k)=>{if(!keep[k]){if(!gap)h+=' <span class=gap>…</span>';gap=true;return}gap=false;h+=' '+(t[0]=='='?E(t[1]):t[0]=='-'?`<del>${E(t[1])}</del>`:`<ins>${E(t[1])}</ins>`)});return h}
+function stats(){const c={review:0,applied:0,done:0};D.items.forEach(i=>c[bucket(i)]++);$('#st').textContent=`${c.review} need you · ${c.applied} auto-applied to verify · ${c.done} done or no change · ranked by harm × students affected`;
+ $('#tabs').innerHTML=[['review','Needs you'],['applied','Auto-applied'],['done','Done']].map(([k,l])=>`<button class="${tab==k?'on':''}" onclick="tab='${k}';sel=null;draw()">${l} ${c[k]}</button>`).join('')}
+function queue(){const L=D.items.filter(i=>bucket(i)==tab);$('#q').innerHTML=L.length?L.map(i=>{const q=D.questions[i.qid];return`<button class="row ${sel==i.id?'on':''}" onclick="pick('${i.id}')"><small><span class="sev ${sevc(i)}"></span>${E(q.subject)} · ${E(q.chapter)}</small><span class="t">${E(flat(q.question).split('\n')[0].slice(0,80))}</span><small>${E(i.why)}</small></button>`}).join(''):'<div class="empty">Nothing here 🎉</div>'}
+function draw(){stats();queue();if(!sel){const f=D.items.find(i=>bucket(i)==tab);if(f&&innerWidth>860)sel=f.id}sel?detail():($('#c').innerHTML='<div class="empty">Pick a case from the queue.</div>',document.body.classList.remove('det'))}
+function pick(id){sel=id;draw();document.body.classList.add('det');scrollTo(0,0)}
+function detail(){const it=D.items.find(i=>i.id==sel);if(!it)return;queue();document.body.classList.add('det');const q=D.questions[it.qid],s=st(it),ap=apply(it),mine=S[it.id]||{},ed=mine.edits?{...it,edits:mine.edits}:it;
+ const A2=mine.edits?apply(ed):ap,fl=new Set(it.edits.map(e=>e.field)),failed=it.guards.filter(g=>!g.ok);
+ const pill={review:['wr','Needs your decision'],applied:['ok','Auto-applied · verify'],closed:['','No change'],approved:['ok','Approved'],edited:['ok','Approved with edits'],rejected:['er','Rejected'],reverted:['er','Undone']}[s];
+ let h=`<button class="lk back" onclick="sel=null;draw()">← Queue</button><div>${[q.subject,q.chapter,q.concept,q.type,q.level,'…'+q.id.slice(-6)].filter(Boolean).map(x=>`<span class="chip">${E(x)}</span>`).join('')}</div>
+ <h1>${E(it.why)} <span class="chip ${pill[0]}">${pill[1]}</span></h1>
+ <div><span class="chip ac">verdict: ${E(it.verdict)}</span>${it.repair?`<span class="chip ac">repair: ${E(it.repair)}</span>`:''}<span class="chip">confidence ${Math.round(it.confidence*100)}%<span class="bar"><i style="width:${it.confidence*100}%"></i></span></span>${it.sweep?'<span class="chip wr">found by sweep</span>':''}</div>`;
+ if(it.flags.includes('prompt_injection'))h+=`<div class="note er"><b>Prompt-injection attempt.</b> The comment tried to instruct the AI. It was treated as a claim only; nothing was changed.</div>`;
+ if(it.flags.includes('student_value_wrong'))h+=`<div class="note"><b>Key is wrong, but the student's value is wrong too.</b> Don't copy their number.</div>`;
+ if(it.flags.includes('student_claim_wrong'))h+=`<div class="note"><b>The student's claim is wrong</b>, yet the question has a different, real flaw.</div>`;
+ if(q.history.length)h+=`<div class="note">Faculty history: ${q.history.map(x=>E(x.note)+' ('+x.at.slice(0,10)+')').join('; ')}</div>`;
+ h+=`<h2>Why the AI thinks so</h2><div class="card">${E(it.evidence)}${it.suggestion?`<p><b>Suggested:</b> ${E(it.suggestion)}</p>`:''}</div>`;
+ if(failed.length&&it.route=='faculty_review'&&it.verdict=='defect')h+=`<div class="note"><b>Why this needs you, not auto-apply:</b><br>${failed.map(g=>'• '+E(g.name)+(g.detail?' — '+E(g.detail):'')).join('<br>')}</div>`;
+ h+=`<details><summary class="ck">${it.guards.length-failed.length}/${it.guards.length} safety checks passed</summary>${it.guards.map(g=>`<div class="ck ${g.ok?'':'f'}">${g.ok?'✓':'✗'} ${E(g.name)} ${g.detail?`<small style="color:var(--mu)">${E(g.detail)}</small>`:''}</div>`).join('')}</details>`;
+ if(it.edits.length||it.verdict=='defect'){h+=`<h2>What changes</h2><div class="card">`;
+  if(fl.has('answer')||fl.has('questionType')){const ol=rep(q.answer),nl=A2.answer,lab=(a,t)=>{const l=(String(a).match(/[A-D]/g)||[]);return l.length?l.map(x=>`${x}${t=='scq'||t=='mcq'?' · '+E(opt(q.question,x)):''}`).join(', '):E(a)};h+=`<div class="keych"><span>Answer key</span><b class="b">${lab(ol,q.type)}</b>→<b class="a">${lab(nl,A2.type)}</b>${A2.type!=q.type?`<span class="chip er">type ${q.type} → ${A2.type}</span>`:''}</div>`}
+  for(const f of ['question','solution'])if(fl.has(f))h+=`<div class="diff"><small class="chip">${f}</small>${wdiff(flat(q[f]),flat(A2[f]))}</div>`;
+  if(!it.edits.length)h+='<span class="gap">No automatic edit proposed. A human has to author the fix.</span>';
+  h+=`</div>`;
+  for(const f of ['question','solution'])if(fl.has(f))h+=`<div class="panes"><div class="pane"><small>BEFORE · ${f}</small>${clean(q[f])}</div><div class="pane"><small>AFTER · ${f}</small>${clean(A2[f])}</div></div>`;
+  if(!fl.has('question')&&!fl.has('solution'))h+=`<h2>The question</h2><div class="pane">${clean(q.question)}</div>`;
+  h+=`<details><summary class="ck">Raw edit (find → replace)</summary>${(mine.edits||it.edits).map(e=>`<pre style="white-space:pre-wrap;font-size:12px;overflow:auto"><b>${e.field}</b>\n- ${E(e.find.slice(0,400))}\n+ ${E(e.replace.slice(0,400))}</pre>`).join('')}</details>`}
+ else h+=`<h2>The question (unchanged)</h2><div class="pane">${clean(q.question)}</div>`;
+ h+=`<h2>${it.reports.length} student report${it.reports.length>1?'s':''} · what each student sees back</h2>`+it.reports.map(r=>`<div class="card"><div class="cmt"><b>${r.id}</b> · ${r.source} · ${new Date(r.at).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'})}<br>“${E(r.comment)}”</div><div class="bub">${E(mine.replies?.[r.id]??r.reply)}</div></div>`).join('');
+ const k=s=='review'?(it.edits.length?[['Approve','p','a'],['Edit','','e'],['Reject','d','r']]:[['Confirm defect','p','a'],['Reject','d','r']]):s=='applied'?[['Looks good','p','a'],['Undo this change','d','r']]:[['Reopen for review','','o']];
+ h+=`<div class="act"><span>${s=='review'?(it.edits.length?'One click applies the edit and sends the replies.':'Confirms the defect and sends the reply. A human authors the fix.'):s=='applied'?'Applied automatically. Confirm or undo.':'No further action needed.'}</span>${k.map(([l,c,x])=>`<button class="btn ${c}" onclick="act('${x}')">${l}<kbd>${x.toUpperCase()}</kbd></button>`).join('')}</div>`;
+ $('#c').innerHTML=h}
+function log(it,action,note,extra){const q=D.questions[it.qid];A.unshift({ts:new Date().toISOString(),actor:'faculty (you)',action,item:it.id,question:it.qid,repair:it.repair,reports:it.reports.map(r=>r.id),edits:(S[it.id]?.edits||it.edits).map(e=>({field:e.field,find:e.find.slice(0,80),replace:e.replace.slice(0,80)})),note:note||'',...extra});sv('az_a',A)}
+function set(it,v,extra){S[it.id]={...S[it.id],st:v,...extra};sv('az_s',S)}
+function act(x){const it=D.items.find(i=>i.id==sel);if(!it)return;const s=st(it);
+ if(x=='a'){set(it,s=='review'?'approved':'closed');log(it,s=='review'?'approved':'confirmed_auto_apply');next()}
+ if(x=='e'&&s=='review')editDlg(it);
+ if(x=='r')reject(it,s);
+ if(x=='o'){set(it,'review');log(it,'reopened');draw()}}
+function next(){const L=D.items.filter(i=>bucket(i)==tab);const k=L.findIndex(i=>i.id==sel);sel=(L.find(i=>bucket(i)==tab&&L.indexOf(i)>=k&&i.id!=sel)||L.find(i=>i.id!=sel)||{}).id||null;draw()}
+function reject(it,s){const d=$('#dlg');d.innerHTML=`<h3>${s=='applied'?'Undo auto-applied change':'Reject proposal'}</h3><p>Reason (kept in the audit log):</p><select id="rs"><option>AI is wrong</option><option>Right idea, wrong edit; I'll fix it by hand</option><option>Not worth changing</option><option>Needs subject expert</option></select><p><button class="btn d" id="ok">Confirm</button> <button class="btn" onclick="dlg.close()">Cancel</button></p>`;d.showModal();$('#ok').onclick=()=>{set(it,s=='applied'?'reverted':'rejected');log(it,s=='applied'?'undone_auto_apply':'rejected',$('#rs').value);d.close();next()}}
+function editDlg(it){const d=$('#dlg'),cur=S[it.id]?.edits||it.edits;d.innerHTML=`<h3>Edit proposal</h3>${cur.map((e,i)=>`<p><b>${e.field}</b> <small>find (read-only)</small></p><textarea readonly rows=2>${E(e.find.slice(0,300))}</textarea><p><small>replace with</small></p><textarea id="e${i}" rows=3>${E(e.replace)}</textarea>`).join('')}<p><b>Student replies</b></p>${it.reports.map((r,i)=>`<small>${r.id}</small><textarea id="p${i}" rows=3 style="font-family:inherit">${E(S[it.id]?.replies?.[r.id]??r.reply)}</textarea>`).join('')}<p id="er" style="color:var(--er)"></p><p><button class="btn p" id="ok">Save & approve</button> <button class="btn" onclick="dlg.close()">Cancel</button></p>`;d.showModal();
+ $('#ok').onclick=()=>{const ne=cur.map((e,i)=>({...e,replace:$('#e'+i).value})),t={...it,edits:ne};if(apply(t).err){$('#er').textContent=apply(t).err;return}
+  const rp={};it.reports.forEach((r,i)=>rp[r.id]=$('#p'+i).value);set(it,'edited',{edits:ne,replies:rp});log(it,'edited_and_approved','faculty changed the replacement text/replies');d.close();next()}}
+function audit(){const d=$('#dlg');d.innerHTML=`<h3>Audit log <small>(${A.length})</small></h3>${A.length?A.map(a=>`<div class="card"><b>${E(a.action.replace(/_/g,' '))}</b> · ${a.reports.join(', ')||'sweep'} · <small>${new Date(a.ts).toLocaleString('en-IN')}</small><br><small>${E(a.actor)} · ${E(a.repair||'')} ${a.note?'· '+E(a.note):''}</small></div>`).join(''):'<p class="gap">No actions yet.</p>'}<p><button class="btn" onclick="dlg.close()">Close</button> <button class="btn" onclick="exp()">Export JSON</button> <button class="btn d" onclick="if(confirm('Reset all decisions?')){S={};A=[];sv('az_s',S);sv('az_a',A);dlg.close();draw()}">Reset demo</button></p>`;d.showModal()}
+function exp(){const b=new Blob([JSON.stringify(A,null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='audit.json';a.click()}
+addEventListener('keydown',e=>{if(e.target.matches('textarea,select')||$('#dlg').open||e.metaKey||e.ctrlKey)return;const L=D.items.filter(i=>bucket(i)==tab),k=L.findIndex(i=>i.id==sel);
+ if(e.key=='j'&&L[k+1])pick(L[k+1].id);else if(e.key=='k'&&L[k-1])pick(L[k-1].id);else if('aero'.includes(e.key)&&e.key.length==1)act(e.key)});
+draw();
+</script></body></html>
